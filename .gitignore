@@ -1,0 +1,20 @@
+# Customer-only repository; no implementation, corpora or local build products.
+*.zip
+*.tar
+*.tar.gz
+*.exe
+*.dll
+*.so
+*.a
+*.lib
+*.bin
+*.uacd
+*.dgrad
+.env*
+/target/
+/vendor/
+/research/
+/research-results/
+/fixtures/
+/evidence/
+/private/
