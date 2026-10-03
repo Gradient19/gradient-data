@@ -52,5 +52,5 @@ if(NOT TARGET GradientData::shared)
   set_target_properties(GradientData::shared PROPERTIES
     INTERFACE_LINK_LIBRARIES GradientData::gradient_data)
 endif()
-set(GradientData_VERSION "0.2.0-rc.1")
+set(GradientData_VERSION "0.2.0-rc.2")
 set(GradientData_FOUND TRUE)

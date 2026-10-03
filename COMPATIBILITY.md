@@ -1,8 +1,8 @@
 # Compatibility
 
-Product: Gradient Data 0.2.0-rc.1. Format name: UACD. Filename extension: `.uacd`. CLI: `dgrad`. C ABI: v1, with its 17 `dgrad_*` exports and unchanged `gradient_data.h` / `gradient_data.hpp` names. The ABI v1 struct layouts remain `dgrad_options` 32 bytes, `dgrad_read_limits` 40 bytes, and `dgrad_info` 80 bytes.
+Product: Gradient Data 0.2.0-rc.2. Format name: UACD. Filename extension: `.uacd`. CLI: `dgrad`. C ABI: v1, with its 17 `dgrad_*` exports and unchanged `gradient_data.h` / `gradient_data.hpp` names. The ABI v1 struct layouts remain `dgrad_options` 32 bytes, `dgrad_read_limits` 40 bytes, and `dgrad_info` 80 bytes.
 
-The reader accepts DGRAD001, DGRAD002, and UACD0003. Existing `.dgrad` archives remain readable; the filename does not choose a decoder. With `--entropy off` (the default), 256 KiB output uses DGRAD001 and other supported block sizes use DGRAD002. `--entropy local` or `--entropy shared` permits UACD0003 only when entropy coding provides a net benefit. Older RC1 readers do not understand DGRAD002 or UACD0003. An older reader should not be assumed to accept a new archive based on its extension.
+The reader accepts DGRAD001, DGRAD002, and UACD0003. Existing `.dgrad` archives remain readable; the filename does not choose a decoder. With `--entropy off` (the default), 256 KiB output uses DGRAD001 and other supported block sizes use DGRAD002. `--entropy local` or `--entropy shared` permits UACD0003 only when entropy coding provides a net benefit. The public 0.2.0-rc.1 reader also supports all three formats. Earlier readers may support fewer formats; check the exact reader version rather than the filename extension.
 
 The SDK options `flags` field selects entropy mode: `0` off, `1` local, `2` shared. These values are alternatives, not bits to combine. For the raw-block SDK API, shared mode uses a self-contained local entropy representation; a raw block does not depend on file-level shared state. The C ABI v1 function signatures and field offsets remain unchanged. Pair the bundled headers with the bundled library.
 
