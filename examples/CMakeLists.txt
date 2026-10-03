@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 3.16)
+project(gradient_data_customer_examples LANGUAGES C CXX)
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
+find_package(GradientData CONFIG REQUIRED)
+add_executable(read_range_c read_range.c)
+target_link_libraries(read_range_c PRIVATE GradientData::shared)
+add_executable(read_range_cpp read_range.cpp)
+target_link_libraries(read_range_cpp PRIVATE GradientData::static)
+# The Windows static SDK was built with the static MSVC runtime.
+if(MSVC)
+  set_property(TARGET read_range_cpp PROPERTY MSVC_RUNTIME_LIBRARY MultiThreaded)
+endif()

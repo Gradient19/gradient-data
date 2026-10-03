@@ -1,9 +1,7 @@
 # Security scope
 
-Gradient Data packages are being prepared; no public binary is currently available.
+UACD archive hashes detect accidental corruption and inconsistent data. They are not publisher signatures, encryption, access control, or protection against a malicious archive author. Check the release through an authenticated publisher channel before running it; a matching `SHA256SUMS` file alone does not establish origin.
 
-Checksums can detect accidental changes when compared with a trusted expected value. They are not signatures and do not establish the identity or trustworthiness of an archive author.
+Use a trusted output directory that supports hard links. Keep the input or archive unchanged during an operation. An archive can request substantial disk, memory, and CPU work; inspect metadata and set `--max-output` and `--max-index` where applicable. Do not treat the limits as operating-system quotas. Existing output names are not replaced, and forced termination can leave partial files.
 
-Install only packages linked from this repository's official releases. A release will state its tested platform and known limitations. Do not treat a filename extension as evidence that a file is valid.
-
-Please do not post passwords, access tokens, private data files or exploit payloads in public issues. Public issues may contain a minimal non-sensitive description of a problem.
+Only Linux x86-64 and Windows x86-64 are intended for this bundle. A checksum check does not establish security audit, compatibility on every host, or freedom from dependency vulnerabilities. Report suspected security issues through this repository's Security → Report a vulnerability flow: https://github.com/Gradient19/gradient-data/security/advisories/new . Do not include sensitive archives in a public issue. Regular bugs can be filed at https://github.com/Gradient19/gradient-data/issues with the version, platform and a small non-sensitive reproduction.

@@ -1,0 +1,12 @@
+Gradient Data / UACD
+Copyright (c) 2026 Daniel Kenessy. All rights reserved.
+
+Gradient19 is the publishing organization; publication does not transfer the
+author's copyright. The copyright holder permits recipients to download and run
+the listed customer binaries, and to copy and use the bundled C/C++ SDK headers
+and libraries, for evaluation and integration testing. This limited permission
+does not grant production deployment, redistribution, modification, sublicensing,
+patent, trademark, support, warranty, pricing, or other commercial terms. Those
+matters require a separate written agreement with the rights holder where
+applicable. Third-party components retain their own licenses; see
+THIRD_PARTY_NOTICES.md and licenses/.

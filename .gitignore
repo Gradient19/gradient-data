@@ -18,3 +18,8 @@
 /fixtures/
 /evidence/
 /private/
+
+# Local consumer build and Python caches.
+/build/
+__pycache__/
+*.py[cod]
