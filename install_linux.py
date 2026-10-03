@@ -11,7 +11,7 @@ import stat
 import sys
 import tempfile
 
-VERSION = "0.2.0-rc.1"
+VERSION = "0.2.0-rc.2"
 REQUIRED = {
     "linux-x86_64/dgrad", "linux-x86_64/libgradient_data_c.so",
     "linux-x86_64/libgradient_data_c.a", "include/gradient_data.h",
