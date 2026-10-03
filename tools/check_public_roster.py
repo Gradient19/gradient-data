@@ -87,8 +87,8 @@ REPOSITORY_ONLY = frozenset({
     "tools/customer_smoke.py", "tools/check_public_roster.py",
 })
 RELEASE_BINARIES = frozenset({
-    "linux-x86_64/dgrad", "linux-x86_64/libgradient_data_c.so",
-    "linux-x86_64/libgradient_data_c.a", "windows-x86_64/dgrad.exe",
+    "linux-x86_64/uacd", "linux-x86_64/libgradient_data_c.so",
+    "linux-x86_64/libgradient_data_c.a", "windows-x86_64/uacd.exe",
     "windows-x86_64/gradient_data_c.dll", "windows-x86_64/gradient_data_c.dll.lib",
     "windows-x86_64/gradient_data_c.lib",
 })

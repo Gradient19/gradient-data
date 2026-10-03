@@ -1,6 +1,8 @@
 # Compatibility
 
-Product: Gradient Data 0.2.0-rc.2. Format name: UACD. Filename extension: `.uacd`. CLI: `dgrad`. C ABI: v1, with its 17 `dgrad_*` exports and unchanged `gradient_data.h` / `gradient_data.hpp` names. The ABI v1 struct layouts remain `dgrad_options` 32 bytes, `dgrad_read_limits` 40 bytes, and `dgrad_info` 80 bytes.
+Product: Gradient Data 0.2.0-rc.3. Format name: UACD. Filename extension: `.uacd`. CLI: `uacd`. C ABI: v1, with its 17 `dgrad_*` exports and unchanged `gradient_data.h` / `gradient_data.hpp` names. The ABI v1 struct layouts remain `dgrad_options` 32 bytes, `dgrad_read_limits` 40 bytes, and `dgrad_info` 80 bytes.
+
+Since 0.2.0-rc.3, the customer CLI is `uacd` (`uacd.exe` on Windows); earlier bundles used `dgrad`. Update command paths in scripts when adopting this bundle. The new installer preserves earlier version directories and occupied command names, including dangling symlinks; it creates no `dgrad` alias. The C ABI names, structs, header filenames and SDK library names stay unchanged so existing C/C++ integrations keep their identifiers.
 
 The reader accepts DGRAD001, DGRAD002, and UACD0003. Existing `.dgrad` archives remain readable; the filename does not choose a decoder. With `--entropy off` (the default), 256 KiB output uses DGRAD001 and other supported block sizes use DGRAD002. `--entropy local` or `--entropy shared` permits UACD0003 only when entropy coding provides a net benefit. The public 0.2.0-rc.1 reader also supports all three formats. Earlier readers may support fewer formats; check the exact reader version rather than the filename extension.
 
