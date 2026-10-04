@@ -200,7 +200,8 @@ def verify_bundle(root, installed=False):
 
 def run(*command, env=None):
     result = subprocess.run([str(item) for item in command], env=env,
-                            stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=180)
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+                            encoding="utf-8", errors="strict", timeout=180)
     if result.returncode:
         raise RuntimeError(f"command failed ({result.returncode}): {command!r}\n"
                            f"stdout: {result.stdout[-3000:]}\nstderr: {result.stderr[-3000:]}")
