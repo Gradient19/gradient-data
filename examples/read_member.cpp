@@ -1,8 +1,6 @@
-#include "gradient_data.hpp"
+#include "uacd_archive.hpp"
 #include <algorithm>
-#include <cstdint>
 #include <iostream>
-#include <string>
 #ifdef _WIN32
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
@@ -12,27 +10,48 @@
 #endif
 #include <windows.h>
 #include <string>
+#include <fcntl.h>
+#include <io.h>
 #endif
+/* Usage: read_member ARCHIVE.uacd MEMBER. Bounded verified member output;
+ * the parent archive closes before the independent member reader is used. */
 #ifdef _WIN32
 static int utf8_main(int argc, char **argv)
 #else
 int main(int argc, char **argv)
 #endif
 {
-    if (argc != 2) { std::cerr << "usage: read_range_cpp FILE.uacd\n"; return 2; }
-    try {
-        gradient_data::reader reader{std::string(argv[1])};
-        reader.verify();
-        const auto info = reader.info();
-        const auto count = static_cast<size_t>(std::min<uint64_t>(info.raw_bytes, 32));
-        const auto bytes = reader.read(0, count);
-        std::cout << "read " << bytes.size() << " verified bytes from "
-                  << info.raw_bytes << "-byte file\n";
-        return 0;
-    } catch (const std::exception &error) {
-        std::cerr << error.what() << '\n';
+    if (argc != 3) {
+        std::cerr << "usage: " << argv[0] << " ARCHIVE.uacd MEMBER\n";
+        return 2;
+    }
+#ifdef _WIN32
+    if (_setmode(_fileno(stdout), _O_BINARY) == -1) {
+        std::cerr << "could not set binary stdout\n";
         return 1;
     }
+#endif
+    try {
+        auto member = [&] {
+            gradient_data::archive_reader archive(argv[1]);
+            archive.verify();
+            return archive.member(argv[2]);
+        }();
+        member.verify();
+        const auto info = member.info();
+        const auto length = static_cast<size_t>(std::min<uint64_t>(info.raw_bytes, 4096));
+        const auto bytes = member.read(0, length, 4096);
+        if (!bytes.empty()) {
+            std::cout.write(reinterpret_cast<const char *>(bytes.data()),
+                static_cast<std::streamsize>(bytes.size()));
+        }
+        std::cout.flush();
+        if (!std::cout) throw std::runtime_error("could not write member bytes");
+    } catch (const std::exception &error) {
+        std::cerr << error.what() << "\n";
+        return 1;
+    }
+    return 0;
 }
 
 #ifdef _WIN32
@@ -54,12 +73,14 @@ static std::string utf8_argument(const wchar_t *argument) {
     return bytes;
 }
 int wmain(int argc, wchar_t **argv) {
-    char program[] = "read_range";
-    char *converted[2] = {program};
-    if (argc != 2) return utf8_main(argc, converted);
+    char program[] = "read_member";
+    char *converted[3] = {program};
+    if (argc != 3) return utf8_main(argc, converted);
     try {
         auto archive = utf8_argument(argv[1]);
         converted[1] = archive.data();
+        auto member = utf8_argument(argv[2]);
+        converted[2] = member.data();
         return utf8_main(argc, converted);
     } catch (const std::exception &error) {
         std::cerr << error.what() << "\n";
