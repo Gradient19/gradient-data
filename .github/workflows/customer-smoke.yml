@@ -6,9 +6,9 @@ on:
   workflow_dispatch:
     inputs:
       release_tag:
-        description: Public Gradient Data release tag containing the fixed 0.3.0-rc.1 assets
+        description: Public Gradient Data release tag containing the fixed 0.3.0-rc.2 assets
         required: true
-        default: v0.3.0-rc.1
+        default: v0.3.0-rc.2
         type: string
 
 permissions:
