@@ -22,6 +22,7 @@ ALLOWED = frozenset([
   "start-gui.sh",
   "examples/read_member.c",
   "examples/read_member.cpp",
+  "examples/runtime_asset_reader.c",
   "include/uacd_archive.h",
   "include/uacd_archive.hpp",
   "SECURITY.md",

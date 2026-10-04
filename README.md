@@ -1,4 +1,4 @@
-# Gradient Data 0.3.0-rc.2 customer bundle
+# Gradient Data 0.3.0-rc.3 customer bundle
 
 This is an unsigned release candidate for evaluation and integration testing under [NOTICE.txt](NOTICE.txt). Download the combined Linux/Windows bundle from [Releases](https://github.com/Gradient19/gradient-data/releases) and extract it to a new directory. A source-tree checkout is not the binary bundle.
 
@@ -21,15 +21,15 @@ Windows PowerShell:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
-& "$env:LOCALAPPDATA\Programs\GradientData\0.3.0-rc.2\windows-x86_64\uacd.exe" --version
-& "$env:LOCALAPPDATA\Programs\GradientData\0.3.0-rc.2\windows-x86_64\uacd.exe" pack input.bin output.uacd
-& "$env:LOCALAPPDATA\Programs\GradientData\0.3.0-rc.2\windows-x86_64\uacd.exe" verify output.uacd
+& "$env:LOCALAPPDATA\Programs\GradientData\0.3.0-rc.3\windows-x86_64\uacd.exe" --version
+& "$env:LOCALAPPDATA\Programs\GradientData\0.3.0-rc.3\windows-x86_64\uacd.exe" pack input.bin output.uacd
+& "$env:LOCALAPPDATA\Programs\GradientData\0.3.0-rc.3\windows-x86_64\uacd.exe" verify output.uacd
 powershell -NoProfile -ExecutionPolicy Bypass -File .\uninstall.ps1
 ```
 
 The Linux binaries require x86-64 and glibc 2.34 or newer. The optional Linux installer needs Python 3 and kernel/filesystem support for no-replace directory rename (`renameat2`); running the CLI directly does not require Python. Windows shared-SDK applications need the Microsoft Visual C++ runtime; the standalone CLI and supplied static SDK use a static CRT. Native CI targets Ubuntu 22.04 and Windows Server 2022; additional customer-host trials are required for deployment on other systems.
 
-The installers use only extracted local files, check the complete listed file roster and SHA-256 hashes, and write to the user's profile. They do not download code or change the system PATH. The Linux installer provides user-local `uacd` and `uacd-gui` links in `~/.local/bin` when each name is free, and preserves an existing command or symlink. Earlier version directories and existing commands are preserved. Uninstall removes only this version and its matching command links. If the name is occupied, run `~/.local/share/gradient-data/0.3.0-rc.2/linux-x86_64/uacd` directly. If interrupted before completion, rerun it; an incomplete hidden staging directory may remain in the user data directory after forced termination, while the final versioned installation path stays free for a retry. Run directly from `linux-x86_64/uacd` or `windows-x86_64/uacd.exe` if installation is unnecessary.
+The installers use only extracted local files, check the complete listed file roster and SHA-256 hashes, and write to the user's profile. They do not download code or change the system PATH. The Linux installer provides user-local `uacd` and `uacd-gui` links in `~/.local/bin` when each name is free, and preserves an existing command or symlink. Earlier version directories and existing commands are preserved. Uninstall removes only this version and its matching command links. If the name is occupied, run `~/.local/share/gradient-data/0.3.0-rc.3/linux-x86_64/uacd` directly. If interrupted before completion, rerun it; an incomplete hidden staging directory may remain in the user data directory after forced termination, while the final versioned installation path stays free for a retry. Run directly from `linux-x86_64/uacd` or `windows-x86_64/uacd.exe` if installation is unnecessary.
 
 `pack` accepts `--entropy off|local|shared`; the default is `off`. `local` and `shared` are optional encoding choices. A file uses container version 3 only when entropy coding actually wins; selecting entropy is not a promise of a smaller file or a new container version. `off` preserves the existing version 1/2 writing path. The single-file reader accepts all three; see [COMPATIBILITY.md](COMPATIBILITY.md) for exact headers. For example:
 
@@ -43,6 +43,18 @@ uacd range output.uacd 0 4096 first-4k.bin
 Pack defaults to quality with 256 KiB blocks. Fast and quality accept 64, 128, 256, 512 and 1024 KiB; talon accepts up to 256 KiB. Existing destinations are never overwritten. Standalone C11 shared and C++17 static examples are in [`examples/`](examples/). See [SDK.md](SDK.md), [SECURITY.md](SECURITY.md), [COMPATIBILITY.md](COMPATIBILITY.md), and [NOTICE.txt](NOTICE.txt).
 
 Shared entropy can use temporary space for several complete candidate archives. It is not an unconditional size or speed improvement; small files can decode more slowly. The source and archive must stay unchanged during use, and output directories must be trusted and support hard links. Single-file containers store the file's bytes. Folder/selection envelopes additionally store portable member names, empty directories and executable intent; they do not preserve ACLs, ownership, timestamps or hard-link identity.
+
+## Optional CPU and process-budget settings
+
+The default remains one encoder worker. The CLI can use two workers with a bounded queue while keeping archive order, selected recipes and entropy model selection unchanged:
+
+```sh
+uacd pack Game Game.uacd --profile fast --workers 2 --memory-budget 2GiB
+```
+
+`--workers 2` applies a 2 GiB OS budget when no explicit `--memory-budget` is supplied. An explicit budget also works with one worker. Linux limits process address space; Windows uses startup private commit plus a conservative job committed-memory allowance. These are different OS accounting policies and **are not physical-memory/RSS limits**. The CLI reports the policy and applied allowance. Lower inherited limits remain in effect; attachment failure is an error with no unconstrained retry. A small budget can refuse work or abort an allocation; abrupt termination can leave hidden temporary files while the final archive remains unpublished. Source/output directories must remain trusted and unchanged during use.
+
+Two workers can use more RAM and may be slower on short files or I/O-bound data. The browser interface and SDK remain serial and do not alter another application's process quota. No new decoder format or C ABI is required. See [`examples/runtime_asset_reader.c`](examples/runtime_asset_reader.c) for bounded direct member/range reads with an equivalent loose-file control.
 
 ## Files, folders and the graphical interface
 

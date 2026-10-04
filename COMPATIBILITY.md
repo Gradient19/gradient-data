@@ -1,6 +1,6 @@
 # Compatibility
 
-Product: Gradient Data 0.3.0-rc.2. Format name: UACD. Filename extension: `.uacd`. CLI: `uacd`. C ABI: v1, with the original 17 `dgrad_*` exports plus 8 additive `uacd_archive_*` exports and unchanged `gradient_data.h` / `gradient_data.hpp` names. The ABI v1 struct layouts remain `dgrad_options` 32 bytes, `dgrad_read_limits` 40 bytes, and `dgrad_info` 80 bytes.
+Product: Gradient Data 0.3.0-rc.3. Format name: UACD. Filename extension: `.uacd`. CLI: `uacd`. C ABI: v1, with the original 17 `dgrad_*` exports plus 8 additive `uacd_archive_*` exports and unchanged `gradient_data.h` / `gradient_data.hpp` names. The ABI v1 struct layouts remain `dgrad_options` 32 bytes, `dgrad_read_limits` 40 bytes, and `dgrad_info` 80 bytes.
 
 Since 0.2.0-rc.3, the customer CLI is `uacd` (`uacd.exe` on Windows); earlier bundles used `dgrad`. Update command paths in scripts when adopting this bundle. The new installer preserves earlier version directories and occupied command names, including dangling symlinks; it creates no `dgrad` alias. The C ABI names, structs, header filenames and SDK library names stay unchanged so existing C/C++ integrations keep their identifiers.
 
