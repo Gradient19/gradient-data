@@ -1,6 +1,6 @@
 #!/bin/sh
 set -eu
-prefix=${XDG_DATA_HOME:-"$HOME/.local/share"}/gradient-data/0.3.0-rc.2
+prefix=${XDG_DATA_HOME:-"$HOME/.local/share"}/gradient-data/0.3.0-rc.3
 bin_dir=${XDG_BIN_HOME:-"$HOME/.local/bin"}
 command -v python3 >/dev/null 2>&1 || { echo 'python3 is required for exact uninstall verification' >&2; exit 1; }
 python3 - "$prefix" "$bin_dir" <<'PY'
@@ -12,7 +12,7 @@ if root.is_symlink() or not root.is_dir():
 manifest_path = root / 'SHA256SUMS'
 manifest = manifest_path.read_bytes()
 receipt = (root / 'INSTALL_RECEIPT').read_text('ascii').splitlines()
-if receipt != ['Gradient Data 0.3.0-rc.2', hashlib.sha256(manifest).hexdigest()]:
+if receipt != ['Gradient Data 0.3.0-rc.3', hashlib.sha256(manifest).hexdigest()]:
     raise SystemExit('installation receipt mismatch')
 rows = {}
 for line in manifest.decode('ascii').splitlines():

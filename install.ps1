@@ -15,7 +15,7 @@ $required = @(
     'include/gradient_data.h', 'include/gradient_data.hpp',
     'include/uacd_archive.h', 'include/uacd_archive.hpp',
     'cmake/GradientDataConfig.cmake',
-    'examples/read_member.c', 'examples/read_member.cpp',
+    'examples/read_member.c', 'examples/read_member.cpp', 'examples/runtime_asset_reader.c',
     'GUI.md', 'Start_Gradient_Data.cmd'
 )
 foreach ($name in $required) { if (-not $rows.ContainsKey($name)) { throw "Missing: $name" } }
@@ -51,7 +51,7 @@ foreach ($name in $rows.Keys) {
     if ((Get-FileHash -LiteralPath $file -Algorithm SHA256).Hash.ToLowerInvariant() -cne $rows[$name]) { throw "Checksum mismatch: $name" }
 }
 $parent = Join-Path $env:LOCALAPPDATA 'Programs\GradientData'
-$dest = Join-Path $parent '0.3.0-rc.2'
+$dest = Join-Path $parent '0.3.0-rc.3'
 if (Test-Path -LiteralPath $dest) { throw "Installation already exists: $dest" }
 New-Item -ItemType Directory -Force -Path $parent | Out-Null
 $stage = Join-Path $parent ('.gradient-data-install-' + [Guid]::NewGuid().ToString('N'))
@@ -72,7 +72,7 @@ try {
     $ownedStage = $true
     foreach ($item in Get-ChildItem -LiteralPath $root -Force) { Copy-Item -LiteralPath $item.FullName -Destination $stage -Recurse -Force }
     $manifestHash = (Get-FileHash -LiteralPath (Join-Path $stage 'SHA256SUMS') -Algorithm SHA256).Hash.ToLowerInvariant()
-    [IO.File]::WriteAllText((Join-Path $stage 'INSTALL_RECEIPT'), "Gradient Data 0.3.0-rc.2`n$manifestHash`n", [Text.Encoding]::ASCII)
+    [IO.File]::WriteAllText((Join-Path $stage 'INSTALL_RECEIPT'), "Gradient Data 0.3.0-rc.3`n$manifestHash`n", [Text.Encoding]::ASCII)
     foreach ($name in $rows.Keys) {
         if ((Get-FileHash -LiteralPath (Join-Path $stage $name) -Algorithm SHA256).Hash.ToLowerInvariant() -cne $rows[$name]) { throw "Staged file mismatch: $name" }
     }

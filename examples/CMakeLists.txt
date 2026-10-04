@@ -19,3 +19,13 @@ target_link_libraries(read_member_cpp PRIVATE GradientData::static)
 if(MSVC)
   set_property(TARGET read_member_cpp PROPERTY MSVC_RUNTIME_LIBRARY MultiThreaded)
 endif()
+
+# Compile the same bounded C ABI consumer as shared C11 and static C++17.
+add_executable(runtime_asset_reader_c runtime_asset_reader.c)
+target_link_libraries(runtime_asset_reader_c PRIVATE GradientData::shared)
+configure_file(runtime_asset_reader.c runtime_asset_reader.cpp COPYONLY)
+add_executable(runtime_asset_reader_cpp "${CMAKE_CURRENT_BINARY_DIR}/runtime_asset_reader.cpp")
+target_link_libraries(runtime_asset_reader_cpp PRIVATE GradientData::static)
+if(MSVC)
+  set_property(TARGET runtime_asset_reader_cpp PROPERTY MSVC_RUNTIME_LIBRARY MultiThreaded)
+endif()
