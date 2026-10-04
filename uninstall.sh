@@ -1,18 +1,18 @@
 #!/bin/sh
 set -eu
-prefix=${XDG_DATA_HOME:-"$HOME/.local/share"}/gradient-data/0.2.0-rc.3
+prefix=${XDG_DATA_HOME:-"$HOME/.local/share"}/gradient-data/0.3.0-rc.1
 bin_dir=${XDG_BIN_HOME:-"$HOME/.local/bin"}
 command -v python3 >/dev/null 2>&1 || { echo 'python3 is required for exact uninstall verification' >&2; exit 1; }
 python3 - "$prefix" "$bin_dir" <<'PY'
 import hashlib, os, pathlib, re, stat, sys
 root = pathlib.Path(sys.argv[1])
-link = pathlib.Path(sys.argv[2]) / 'uacd'
+bin_dir = pathlib.Path(sys.argv[2])
 if root.is_symlink() or not root.is_dir():
     raise SystemExit('matching installation not found')
 manifest_path = root / 'SHA256SUMS'
 manifest = manifest_path.read_bytes()
 receipt = (root / 'INSTALL_RECEIPT').read_text('ascii').splitlines()
-if receipt != ['Gradient Data 0.2.0-rc.3', hashlib.sha256(manifest).hexdigest()]:
+if receipt != ['Gradient Data 0.3.0-rc.1', hashlib.sha256(manifest).hexdigest()]:
     raise SystemExit('installation receipt mismatch')
 rows = {}
 for line in manifest.decode('ascii').splitlines():
@@ -45,8 +45,10 @@ for name, expected in rows.items():
             digest.update(chunk)
     if digest.hexdigest() != expected:
         raise SystemExit('installed file modified: ' + name)
-if link.is_symlink() and os.readlink(link) == str(root / 'linux-x86_64/uacd'):
-    link.unlink()
+for command in ('uacd', 'uacd-gui'):
+    link = bin_dir / command
+    if link.is_symlink() and os.readlink(link) == str(root / 'linux-x86_64' / command):
+        link.unlink()
 for name in sorted(rows, key=lambda part: (part.count('/'), part), reverse=True):
     (root / name).unlink()
 (root / 'INSTALL_RECEIPT').unlink()

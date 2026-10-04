@@ -14,6 +14,8 @@ else()
 endif()
 if(NOT EXISTS "${_GradientData_ROOT}/include/gradient_data.h" OR
    NOT EXISTS "${_GradientData_ROOT}/include/gradient_data.hpp" OR
+   NOT EXISTS "${_GradientData_ROOT}/include/uacd_archive.h" OR
+   NOT EXISTS "${_GradientData_ROOT}/include/uacd_archive.hpp" OR
    NOT EXISTS "${_GradientData_SHARED}" OR NOT EXISTS "${_GradientData_STATIC}" OR
    (WIN32 AND NOT EXISTS "${_GradientData_IMPLIB}"))
   set(GradientData_FOUND FALSE)
@@ -52,5 +54,5 @@ if(NOT TARGET GradientData::shared)
   set_target_properties(GradientData::shared PROPERTIES
     INTERFACE_LINK_LIBRARIES GradientData::gradient_data)
 endif()
-set(GradientData_VERSION "0.2.0-rc.3")
+set(GradientData_VERSION "0.3.0-rc.1")
 set(GradientData_FOUND TRUE)

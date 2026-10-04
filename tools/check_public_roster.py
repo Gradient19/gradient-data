@@ -17,6 +17,13 @@ ALLOWED = frozenset([
   "NOTICE.txt",
   "README.md",
   "SDK.md",
+  "GUI.md",
+  "Start_Gradient_Data.cmd",
+  "start-gui.sh",
+  "examples/read_member.c",
+  "examples/read_member.cpp",
+  "include/uacd_archive.h",
+  "include/uacd_archive.hpp",
   "SECURITY.md",
   "SHA256SUMS",
   "THIRD_PARTY_NOTICES.md",
@@ -87,8 +94,9 @@ REPOSITORY_ONLY = frozenset({
     "tools/customer_smoke.py", "tools/check_public_roster.py",
 })
 RELEASE_BINARIES = frozenset({
-    "linux-x86_64/uacd", "linux-x86_64/libgradient_data_c.so",
+    "linux-x86_64/uacd", "linux-x86_64/uacd-gui", "linux-x86_64/libgradient_data_c.so",
     "linux-x86_64/libgradient_data_c.a", "windows-x86_64/uacd.exe",
+    "windows-x86_64/uacd-gui.exe",
     "windows-x86_64/gradient_data_c.dll", "windows-x86_64/gradient_data_c.dll.lib",
     "windows-x86_64/gradient_data_c.lib",
 })

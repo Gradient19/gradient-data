@@ -11,11 +11,11 @@ import stat
 import sys
 import tempfile
 
-VERSION = "0.2.0-rc.3"
+VERSION = "0.3.0-rc.1"
 REQUIRED = {
-    "linux-x86_64/uacd", "linux-x86_64/libgradient_data_c.so",
+    "linux-x86_64/uacd", "linux-x86_64/uacd-gui", "linux-x86_64/libgradient_data_c.so",
     "linux-x86_64/libgradient_data_c.a", "include/gradient_data.h",
-    "include/gradient_data.hpp", "cmake/GradientDataConfig.cmake",
+    "include/gradient_data.hpp", "include/uacd_archive.h", "include/uacd_archive.hpp", "cmake/GradientDataConfig.cmake",
 }
 
 
@@ -169,13 +169,14 @@ def install(root, prefix, bin_dir, publish=None):
                 except OSError:
                     pass
         raise
-    link = bin_dir / "uacd"
-    try:
-        link.symlink_to(prefix / "linux-x86_64/uacd")
-    except FileExistsError:
-        pass  # Preserve an existing user command.
-    except OSError as exc:
-        print(f"Installed, but user-local uacd link could not be created: {exc}", file=sys.stderr)
+    for command in ("uacd", "uacd-gui"):
+        link = bin_dir / command
+        try:
+            link.symlink_to(prefix / "linux-x86_64" / command)
+        except FileExistsError:
+            pass  # Preserve an existing user command.
+        except OSError as exc:
+            print(f"Installed, but user-local {command} link could not be created: {exc}", file=sys.stderr)
     return prefix
 
 
