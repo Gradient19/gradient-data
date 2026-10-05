@@ -11,7 +11,7 @@ import stat
 import sys
 import tempfile
 
-VERSION = "0.3.0-rc.3"
+VERSION = "0.3.0-rc.4"
 REQUIRED = {
     "linux-x86_64/uacd", "linux-x86_64/uacd-gui", "linux-x86_64/libgradient_data_c.so",
     "linux-x86_64/libgradient_data_c.a", "include/gradient_data.h",
