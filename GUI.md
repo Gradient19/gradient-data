@@ -1,6 +1,6 @@
 # Gradient Data graphical interface
 
-Gradient Data 0.3.0-rc.4 includes an offline graphical interface for Linux and Windows x86-64. It uses your installed browser and the same native engine as the CLI. No Node, Python or Rust is required to run the portable interface. Close it with **Close session** to stop its local background process; merely closing the tab leaves the process available for reopening.
+Gradient Data 0.3.0-rc.5 includes an offline graphical interface for Linux and Windows x86-64. It uses your installed browser and the same native engine as the CLI. No Node, Python or Rust is required to run the portable interface. Close it with **Close session** to stop its local background process; merely closing the tab leaves the process available for reopening.
 
 On Windows, double-click `Start_Gradient_Data.cmd` or `windows-x86_64/uacd-gui.exe`. On Linux, run `./start-gui.sh` or open the executable `linux-x86_64/uacd-gui` with your file manager. If an extractor removes Linux executable permissions, mark the launcher and executable as runnable. Optional installation also supplies the `uacd-gui` user-local command. If automatic opening fails, `uacd gui` prints a private local URL to open manually.
 
