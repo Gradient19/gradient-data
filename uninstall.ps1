@@ -1,11 +1,11 @@
 $ErrorActionPreference = 'Stop'
-$dest = Join-Path $env:LOCALAPPDATA 'Programs\GradientData\0.3.0-rc.3'
+$dest = Join-Path $env:LOCALAPPDATA 'Programs\GradientData\0.3.0-rc.4'
 $receiptPath = Join-Path $dest 'INSTALL_RECEIPT'
 $manifestPath = Join-Path $dest 'SHA256SUMS'
 if (-not (Test-Path -LiteralPath $dest -PathType Container) -or (Get-Item -LiteralPath $dest).Attributes -band [IO.FileAttributes]::ReparsePoint) { throw 'Matching installation not found' }
 $receipt = [IO.File]::ReadAllLines($receiptPath)
 $manifestHash = (Get-FileHash -LiteralPath $manifestPath -Algorithm SHA256).Hash.ToLowerInvariant()
-if ($receipt.Count -ne 2 -or $receipt[0] -cne 'Gradient Data 0.3.0-rc.3' -or $receipt[1] -cne $manifestHash) { throw 'Installation receipt mismatch' }
+if ($receipt.Count -ne 2 -or $receipt[0] -cne 'Gradient Data 0.3.0-rc.4' -or $receipt[1] -cne $manifestHash) { throw 'Installation receipt mismatch' }
 $rows = @{}
 foreach ($line in [IO.File]::ReadAllLines($manifestPath)) {
     if ($line -cnotmatch '^([0-9a-f]{64})  ([A-Za-z0-9_./-]+)$') { throw 'Invalid installed manifest' }
