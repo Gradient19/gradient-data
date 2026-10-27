@@ -1,8 +1,6 @@
 name: Customer release smoke
 
 on:
-  release:
-    types: [published]
   workflow_dispatch:
     inputs:
       release_tag:
@@ -10,7 +8,6 @@ on:
         required: true
         default: v0.3.0-rc.5
         type: string
-
 permissions:
   contents: read
 

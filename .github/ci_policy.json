@@ -18,26 +18,30 @@
     {
       "path": ".github/workflows/customer-smoke.yml",
       "local_runner_label": null,
-      "automatic": true,
+      "automatic": false,
       "jobs": {
         "customer-smoke": {
           "timeout_minutes": "30",
           "runs_on": "${{ matrix.os }}"
         }
       },
-      "changes": []
+      "changes": [
+        "Legacy automatic dispatch retired; complete QA stays local. Free standard hosted execution requires a qualified60second gate or explicit exception."
+      ]
     },
     {
       "path": ".github/workflows/public-roster.yml",
       "local_runner_label": null,
-      "automatic": true,
+      "automatic": false,
       "jobs": {
         "public-roster": {
           "timeout_minutes": "5",
           "runs_on": "ubuntu-22.04"
         }
       },
-      "changes": []
+      "changes": [
+        "Legacy automatic dispatch retired; complete QA stays local. Free standard hosted execution requires a qualified60second gate or explicit exception."
+      ]
     }
   ]
 }
