@@ -1,0 +1,43 @@
+{
+  "schema": "owner-local-ci-policy/1",
+  "policy_id": "owner-local-ci-20261027-v1",
+  "repository": "Gradient19/gradient-data",
+  "private": false,
+  "routine_online_max_seconds": 60,
+  "paid_hosted_compute_allowed": false,
+  "full_qa_location": "owner-local-outside-actions",
+  "public_standard_hosted_allowed_only_if_free": true,
+  "native_budget_alerts_required": true,
+  "automatic_budget_increase_allowed": false,
+  "offline_runner_state": "QUEUED_OR_NOT_RUN",
+  "fake_success_allowed": false,
+  "disposable_artifact_retention_days": 1,
+  "unique_evidence_retention": "preserve until classified private archive and fresh byte/hash recovery",
+  "long_legacy_timeout_is_authorization": false,
+  "workflows": [
+    {
+      "path": ".github/workflows/customer-smoke.yml",
+      "local_runner_label": null,
+      "automatic": true,
+      "jobs": {
+        "customer-smoke": {
+          "timeout_minutes": "30",
+          "runs_on": "${{ matrix.os }}"
+        }
+      },
+      "changes": []
+    },
+    {
+      "path": ".github/workflows/public-roster.yml",
+      "local_runner_label": null,
+      "automatic": true,
+      "jobs": {
+        "public-roster": {
+          "timeout_minutes": "5",
+          "runs_on": "ubuntu-22.04"
+        }
+      },
+      "changes": []
+    }
+  ]
+}
